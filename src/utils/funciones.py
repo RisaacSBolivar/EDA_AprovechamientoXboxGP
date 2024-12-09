@@ -1,3 +1,9 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+import re
+
 def calculate_mean_time(time_str):
     if pd.isnull(time_str):
         return np.nan
