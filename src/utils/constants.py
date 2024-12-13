@@ -1,5 +1,7 @@
 DF_GAMEPASS_SRC = '../data/games_gamepass.csv'
 DF_METACRITIC_SRC = '../data/games_metacritic.csv'
+DF_GAMEPASS_SRC_MAIN = './data/games_gamepass.csv'
+DF_METACRITIC_SRC_MAIN = './data/games_metacritic.csv'
 GAMERS = 'GAMERS'
 TIME = 'TIME'
 RATIO = 'RATIO'
@@ -19,7 +21,7 @@ GAME = 'GAME'
 RATING = 'RATING'
 XBOX = 'xbox_user_score'
 METACRITIC_USER_SCORE = 'metacritic_user_score'
-CAT_VAL = ["Muy negativas", "Negativas", "Variadas", "Positivas", "Muy positivas"]
+CAT_VALS = ["Muy negativas", "Negativas", "Variadas", "Positivas", "Muy positivas"]
 CAT_BINS = [0, 20, 40, 60, 80, 100]
 METACRITIC_USER_SCORE_CAT = 'metacritic_user_score_cat'
 XBOX_USER_SCORE_CAT = 'xbox_user_score_cat'
