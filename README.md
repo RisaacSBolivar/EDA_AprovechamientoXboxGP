@@ -1,3 +1,5 @@
+<img src="Xbox_one_logo.png" alt="Xbox One Logo" width="300"/> 
+
 # Análisis de Xbox Game Pass: Rentabilidad y Uso (2022)
 
 Este proyecto evalúa el aprovechamiento del servicio Xbox Game Pass durante 2022, analizando si los usuarios dedican tiempo a jugar títulos populares y aclamados por la crítica. Se utilizan datos obtenidos de datasets disponibles en **Kaggle**, que incluyen información sobre las horas de juego dedicadas y las puntuaciones en **Metacritic**, una plataforma reconocida por integrar valoraciones de jugadores y críticos.  
