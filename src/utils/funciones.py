@@ -1,18 +1,42 @@
-import numpy as np
+import re
+from typing import List, Optional, Union
+
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import seaborn as sns
-import re
 
-def calculate_mean_time(time_str):
+
+def calculate_mean_time(time_str: str) -> float:
+    """
+    Calcula el tiempo promedio a partir de una cadena de texto que contiene un rango de tiempo.
+
+    Args:
+        time_str (str): Cadena de texto con el rango de tiempo (ej. "10-20 hours").
+
+    Returns:
+        float: Tiempo promedio calculado. Retorna np.nan si el valor es nulo o no contiene un rango válido.
+    """
     if pd.isnull(time_str):
         return np.nan
-    match = re.findall(r'\d+', time_str)
+    match = re.findall(r'\d+', str(time_str))
     if len(match) == 2:
         return (int(match[0]) + int(match[1])) / 2
     return np.nan
 
-def plot_numerical_histograms(df, numerical_columns, bins_list, kde=False):
+
+def plot_numerical_histograms(
+    df: pd.DataFrame, numerical_columns: List[str], bins_list: List[int], kde: bool = False
+) -> None:
+    """
+    Dibuja histogramas para múltiples columnas numéricas en un DataFrame.
+
+    Args:
+        df (pd.DataFrame): DataFrame que contiene los datos.
+        numerical_columns (List[str]): Lista de nombres de columnas numéricas a graficar.
+        bins_list (List[int]): Lista de número de bins correspondientes a cada columna.
+        kde (bool, optional): Booleano para superponer la Curva de Estimación de Densidad del Kernel (KDE). Por defecto es False.
+    """
     num_cols = 2
     num_rows = (len(numerical_columns) + 1) // num_cols
 
@@ -33,10 +57,35 @@ def plot_numerical_histograms(df, numerical_columns, bins_list, kde=False):
     plt.tight_layout()
     plt.show()
 
-def categorize_score(score, bins, labels):
+
+def categorize_score(
+    score: Union[pd.Series, np.ndarray, float], bins: List[Union[int, float]], labels: List[str]
+) -> pd.Series:
+    """
+    Categoriza una variable continua (como una puntuación) en rangos discretos definidos.
+
+    Args:
+        score (Union[pd.Series, np.ndarray, float]): Valores a categorizar.
+        bins (List[Union[int, float]]): Límites de los rangos para la categorización.
+        labels (List[str]): Etiquetas asignadas a cada rango.
+
+    Returns:
+        pd.Series: Serie de pandas con los valores categorizados.
+    """
     return pd.cut(score, bins=bins, labels=labels, include_lowest=True)
 
-def plot_categorical_numerical_histograms(df, categorical_columns, numerical_columns):
+
+def plot_categorical_numerical_histograms(
+    df: pd.DataFrame, categorical_columns: List[str], numerical_columns: List[str]
+) -> None:
+    """
+    Dibuja histogramas de conteo para combinaciones de columnas categóricas y numéricas.
+
+    Args:
+        df (pd.DataFrame): DataFrame que contiene los datos.
+        categorical_columns (List[str]): Nombres de las columnas categóricas.
+        numerical_columns (List[str]): Nombres de las columnas numéricas (solo usado para el título de las gráficas).
+    """
     colors = sns.color_palette("husl", len(categorical_columns) * len(numerical_columns))
     color_idx = 0
     for cat_col in categorical_columns:
@@ -50,7 +99,18 @@ def plot_categorical_numerical_histograms(df, categorical_columns, numerical_col
             plt.show()
         color_idx += 1
 
-def plot_categorical_numerical_boxplots(df, categorical_columns, numerical_columns):
+
+def plot_categorical_numerical_boxplots(
+    df: pd.DataFrame, categorical_columns: List[str], numerical_columns: List[str]
+) -> None:
+    """
+    Dibuja boxplots para analizar la distribución de columnas numéricas agrupadas por columnas categóricas.
+
+    Args:
+        df (pd.DataFrame): DataFrame que contiene los datos.
+        categorical_columns (List[str]): Nombres de las columnas categóricas para agrupar.
+        numerical_columns (List[str]): Nombres de las columnas numéricas a graficar.
+    """
     colors = sns.color_palette("husl", len(categorical_columns) * len(numerical_columns))
     color_idx = 0
     for cat_col in categorical_columns:
@@ -64,7 +124,20 @@ def plot_categorical_numerical_boxplots(df, categorical_columns, numerical_colum
             plt.show()
         color_idx += 1
 
-def plot_scatter(df, num_col1, num_col2, cat_col=None, point_size=50):
+
+def plot_scatter(
+    df: pd.DataFrame, num_col1: str, num_col2: str, cat_col: Optional[str] = None, point_size: int = 50
+) -> None:
+    """
+    Dibuja un diagrama de dispersión entre dos columnas numéricas, opcionalmente diferenciado por una variable categórica.
+
+    Args:
+        df (pd.DataFrame): DataFrame que contiene los datos.
+        num_col1 (str): Nombre de la primera columna numérica (eje X).
+        num_col2 (str): Nombre de la segunda columna numérica (eje Y).
+        cat_col (Optional[str], optional): Nombre de la columna categórica para colorear los puntos (hue). Por defecto es None.
+        point_size (int, optional): Tamaño de los puntos en el gráfico. Por defecto es 50.
+    """
     plt.figure(figsize=(10, 6))
     
     if cat_col:
